@@ -984,7 +984,9 @@ require('lazy').setup({
     opts = {},
     -- Optional dependencies
     dependencies = {  },
-    -- dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if prefer nvim-web-devicons
+    init = function()
+      vim.keymap.set('n', '<leader>F', '<Cmd>Oil<Cr>', { desc = '[F]ile manager' })
+    end,
   },
 
   -- The following two comments only work if you have downloaded the kickstart repo, not just copy pasted the
