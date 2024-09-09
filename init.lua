@@ -147,7 +147,7 @@ vim.opt.splitbelow = true
 --  See `:help 'list'`
 --  and `:help 'listchars'`
 vim.opt.list = true
-vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣', eol='⏎' }
+vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣', eol = '⏎' }
 
 -- Preview substitutions live, as you type!
 vim.opt.inccommand = 'split'
@@ -174,6 +174,9 @@ vim.keymap.set('n', '<leader>h', '<cmd>nohlsearch<CR>')
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+vim.keymap.set('n', '[g', vim.diagnostic.goto_prev, { desc = 'Go to previous dia[g]nostic message' })
+vim.keymap.set('n', ']g', vim.diagnostic.goto_next, { desc = 'Go to next dia[g]nostic message' })
+vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
@@ -198,11 +201,11 @@ vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right win
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
-vim.api.nvim_create_user_command('Wa', 'wa<bang>', {bang = true})
-vim.api.nvim_create_user_command('WA', 'wa<bang>', {bang = true})
-vim.api.nvim_create_user_command('Q', 'q<bang>', {bang = true})
-vim.api.nvim_create_user_command('Qa', 'qa<bang>', {bang = true})
-vim.api.nvim_create_user_command('QA', 'qa<bang>', {bang = true})
+vim.api.nvim_create_user_command('Wa', 'wa<bang>', { bang = true })
+vim.api.nvim_create_user_command('WA', 'wa<bang>', { bang = true })
+vim.api.nvim_create_user_command('Q', 'q<bang>', { bang = true })
+vim.api.nvim_create_user_command('Qa', 'qa<bang>', { bang = true })
+vim.api.nvim_create_user_command('QA', 'qa<bang>', { bang = true })
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
@@ -369,7 +372,7 @@ require('lazy').setup({
 
       -- Useful for getting pretty icons, but requires a Nerd Font.
       { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
-      { "debugloop/telescope-undo.nvim" },
+      { 'debugloop/telescope-undo.nvim' },
     },
     config = function()
       -- Telescope is a fuzzy finder that comes with a lot of different things that
@@ -637,16 +640,16 @@ require('lazy').setup({
                   labelDetailsSupport = true,
                   preselectSupport = true,
                   resolveSupport = {
-                    properties = { "documentation", "detail", "additionalTextEdits" }
+                    properties = { 'documentation', 'detail', 'additionalTextEdits' },
                   },
                   snippetSupport = false,
                   tagSupport = {
-                    valueSet = { 1 }
-                  }
-                }
-              }
-            }
-          }
+                    valueSet = { 1 },
+                  },
+                },
+              },
+            },
+          },
         },
         -- gopls = {},
         pyright = {},
@@ -720,6 +723,14 @@ require('lazy').setup({
         mode = '',
         desc = '[F]ormat buffer',
       },
+      {
+        '<F2>',
+        function()
+          require('conform').format { async = true, lsp_format = 'fallback' }
+        end,
+        mode = '',
+        desc = '[F]ormat buffer',
+      },
     },
     opts = {
       notify_on_error = false,
@@ -741,14 +752,14 @@ require('lazy').setup({
       end,
       formatters_by_ft = {
         lua = { 'stylua' },
-        python = { "black" },
-        javascript = { "prettier" },
-        typescript = { "prettier" },
-        html = { "prettier" },
-        css = { "prettier" },
-        c = { "clangd" },
-        cpp = { "clangd" },
-        rust = { "rustfmt" },
+        python = { 'black' },
+        javascript = { 'prettier' },
+        typescript = { 'prettier' },
+        html = { 'prettier' },
+        css = { 'prettier' },
+        c = { 'clangd' },
+        cpp = { 'clangd' },
+        rust = { 'rustfmt' },
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
         --
@@ -963,7 +974,7 @@ require('lazy').setup({
     'numToStr/Comment.nvim',
     opts = {
       padding = false,
-    }
+    },
   },
   { 'tpope/vim-obsession' },
   { 'tpope/vim-speeddating' },
@@ -971,7 +982,8 @@ require('lazy').setup({
   {
     'nacitar/a.vim',
     init = function()
-      vim.g.alternateSearchPath = 'reg:/include/src//,reg:/include/source//,reg:/inc/src//,reg:/inc/source//,reg:/src/include//,reg:/source/include//,reg:/src/inc//,reg:/source/include//,sfr:..,sfr:../..,sfr:../../..'
+      vim.g.alternateSearchPath =
+        'reg:/include/src//,reg:/include/source//,reg:/inc/src//,reg:/inc/source//,reg:/src/include//,reg:/source/include//,reg:/src/inc//,reg:/source/include//,sfr:..,sfr:../..,sfr:../../..'
     end,
   },
   { 'bkad/CamelCaseMotion' },
@@ -983,9 +995,38 @@ require('lazy').setup({
     ---@type oil.SetupOpts
     opts = {},
     -- Optional dependencies
-    dependencies = {  },
+    dependencies = {},
     init = function()
       vim.keymap.set('n', '<leader>F', '<Cmd>Oil<Cr>', { desc = '[F]ile manager' })
+    end,
+  },
+  {
+    'hiphish/rainbow-delimiters.nvim',
+    init = function()
+      local rainbow_delimiters = require 'rainbow-delimiters'
+      vim.g.rainbow_delimiters = {
+        strategy = {
+          [''] = rainbow_delimiters.strategy['global'],
+          vim = rainbow_delimiters.strategy['local'],
+        },
+        query = {
+          [''] = 'rainbow-delimiters',
+          lua = 'rainbow-blocks',
+        },
+        priority = {
+          [''] = 110,
+          lua = 210,
+        },
+        highlight = {
+          'RainbowDelimiterRed',
+          'RainbowDelimiterYellow',
+          'RainbowDelimiterBlue',
+          'RainbowDelimiterGreen',
+          'RainbowDelimiterOrange',
+          'RainbowDelimiterViolet',
+          'RainbowDelimiterCyan',
+        },
+      }
     end,
   },
 
