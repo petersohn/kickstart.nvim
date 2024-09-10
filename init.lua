@@ -201,6 +201,7 @@ vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right win
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
+vim.api.nvim_create_user_command('W', 'w<bang>', { bang = true })
 vim.api.nvim_create_user_command('Wa', 'wa<bang>', { bang = true })
 vim.api.nvim_create_user_command('WA', 'wa<bang>', { bang = true })
 vim.api.nvim_create_user_command('Q', 'q<bang>', { bang = true })
@@ -652,7 +653,7 @@ require('lazy').setup({
           },
         },
         -- gopls = {},
-        pyright = {},
+        basedpyright = {},
         rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
@@ -716,7 +717,7 @@ require('lazy').setup({
     cmd = { 'ConformInfo' },
     keys = {
       {
-        '<leader>f',
+        '<leader>F',
         function()
           require('conform').format { async = true, lsp_format = 'fallback' }
         end,
@@ -753,8 +754,8 @@ require('lazy').setup({
       formatters_by_ft = {
         lua = { 'stylua' },
         python = { 'black' },
-        javascript = { 'prettier' },
-        typescript = { 'prettier' },
+        javascript = { 'prettierd', 'prettier', stop_after_first = true },
+        typescript = { 'prettierd', 'prettier', stop_after_first = true },
         html = { 'prettier' },
         css = { 'prettier' },
         c = { 'clangd' },
@@ -997,7 +998,7 @@ require('lazy').setup({
     -- Optional dependencies
     dependencies = {},
     init = function()
-      vim.keymap.set('n', '<leader>F', '<Cmd>Oil<Cr>', { desc = '[F]ile manager' })
+      vim.keymap.set('n', '<leader>f', '<Cmd>Oil<Cr>', { desc = '[F]ile manager' })
     end,
   },
   {
