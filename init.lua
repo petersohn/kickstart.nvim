@@ -941,7 +941,6 @@ require('lazy').setup({
       -- statusline.section_location = function()
       --   return '%2l:%-2v'
       -- end
-
       -- ... and there is more!
       --  Check out: https://github.com/echasnovski/mini.nvim
     end,
@@ -996,7 +995,7 @@ require('lazy').setup({
     ---@type oil.SetupOpts
     opts = {},
     -- Optional dependencies
-    dependencies = {},
+    dependencies = { { 'echasnovski/mini.icons', opts = { style = 'ascii' } } },
     init = function()
       vim.keymap.set('n', '<leader>f', '<Cmd>Oil<Cr>', { desc = '[F]ile manager' })
     end,
