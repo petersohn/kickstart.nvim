@@ -6,6 +6,13 @@ return {
   {
     'lewis6991/gitsigns.nvim',
     opts = {
+      signs = {
+        add = { text = '+' },
+        change = { text = '~' },
+        delete = { text = '_' },
+        topdelete = { text = '‾' },
+        changedelete = { text = '~' },
+      },
       on_attach = function(bufnr)
         local gitsigns = require 'gitsigns'
 
@@ -48,6 +55,7 @@ return {
         map('n', '<leader>hR', gitsigns.reset_buffer, { desc = 'git [R]eset buffer' })
         map('n', '<leader>hp', gitsigns.preview_hunk, { desc = 'git [p]review hunk' })
         map('n', '<leader>hb', gitsigns.blame_line, { desc = 'git [b]lame line' })
+        map('n', '<leader>hB', gitsigns.blame, { desc = 'git [B]lame' })
         map('n', '<leader>hd', gitsigns.diffthis, { desc = 'git [d]iff against index' })
         map('n', '<leader>hD', function()
           gitsigns.diffthis '@'
@@ -55,6 +63,16 @@ return {
         -- Toggles
         map('n', '<leader>tb', gitsigns.toggle_current_line_blame, { desc = '[T]oggle git show [b]lame line' })
         map('n', '<leader>tD', gitsigns.toggle_deleted, { desc = '[T]oggle git show [D]eleted' })
+
+        vim.api.nvim_create_user_command('Gdiff', function(args)
+          gitsigns.diffthis(args.args, {})
+        end, { nargs = '?' })
+        vim.api.nvim_create_user_command('Gvdiff', function(args)
+          gitsigns.diffthis(args.args, { vertical = true })
+        end, { nargs = '?' })
+        vim.api.nvim_create_user_command('Gsdiff', function(args)
+          gitsigns.diffthis { args.args, vertical = false }
+        end, { nargs = '?' })
       end,
     },
   },

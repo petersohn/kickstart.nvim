@@ -256,24 +256,6 @@ require('lazy').setup({
   -- Use `opts = {}` to force a plugin to be loaded.
   --
 
-  -- Here is a more advanced example where we pass configuration
-  -- options to `gitsigns.nvim`. This is equivalent to the following Lua:
-  --    require('gitsigns').setup({ ... })
-  --
-  -- See `:help gitsigns` to understand what the configuration keys do
-  { -- Adds git related signs to the gutter, as well as utilities for managing changes
-    'lewis6991/gitsigns.nvim',
-    opts = {
-      signs = {
-        add = { text = '+' },
-        change = { text = '~' },
-        delete = { text = '_' },
-        topdelete = { text = '‾' },
-        changedelete = { text = '~' },
-      },
-    },
-  },
-
   -- NOTE: Plugins can also be configured to run Lua code when they are loaded.
   --
   -- This is often very useful to both group configuration, as well as handle
@@ -632,29 +614,9 @@ require('lazy').setup({
       --  - capabilities (table): Override fields in capabilities. Can be used to disable certain LSP features.
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
+      capabilities.textDocument.completion.completionItem.snippetSupport = false
       local servers = {
-        clangd = {
-          capabilities = {
-            textDocument = {
-              completion = {
-                completionItem = {
-                  commitCharactersSupport = true,
-                  deprecatedSupport = true,
-                  insertReplaceSupport = true,
-                  labelDetailsSupport = true,
-                  preselectSupport = true,
-                  resolveSupport = {
-                    properties = { 'documentation', 'detail', 'additionalTextEdits' },
-                  },
-                  snippetSupport = false,
-                  tagSupport = {
-                    valueSet = { 1 },
-                  },
-                },
-              },
-            },
-          },
-        },
+        clangd = {},
         -- gopls = {},
         basedpyright = {},
         rust_analyzer = {},
@@ -667,20 +629,7 @@ require('lazy').setup({
         ts_ls = {},
         --
 
-        lua_ls = {
-          -- cmd = {...},
-          -- filetypes = { ...},
-          -- capabilities = {},
-          settings = {
-            Lua = {
-              completion = {
-                callSnippet = 'Replace',
-              },
-              -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-              -- diagnostics = { disable = { 'missing-fields' } },
-            },
-          },
-        },
+        lua_ls = {},
       }
 
       -- Ensure the servers and tools above are installed
@@ -991,7 +940,6 @@ require('lazy').setup({
   },
   { 'bkad/CamelCaseMotion' },
   { 'ngg/vim-gn' },
-  { 'tpope/vim-fugitive' },
   {
     'stevearc/oil.nvim',
     ---@module 'oil'
@@ -999,10 +947,15 @@ require('lazy').setup({
     opts = {
       keymaps = {
         ['<C-v>'] = { 'actions.select', opts = { vertical = true }, desc = 'Open the entry in a vertical split' },
-        ['<C-s>'] = { 'actions.select', opts = { horizontal = true }, desc = 'Open the entry in a horizontal split' },
+        ['<C-s>'] = { 'actions.select', opts = { vertical = false, horizontal = true }, desc = 'Open the entry in a horizontal split' },
+        ['<C-h>'] = false,
+        ['<C-l>'] = false,
+        ['<leader>r'] = 'actions.refresh',
       },
-      show_hidden = true,
       columns = { 'icon', 'size', 'mtime' },
+      view_options = {
+        show_hidden = true,
+      },
     },
     -- Optional dependencies
     dependencies = {
@@ -1057,12 +1010,12 @@ require('lazy').setup({
   --  Here are some example plugins that I've included in the Kickstart repository.
   --  Uncomment any of the lines below to enable them (you will need to restart nvim).
   --
-  -- require 'kickstart.plugins.debug',
+  --require 'kickstart.plugins.debug',
   -- require 'kickstart.plugins.indent_line',
   -- require 'kickstart.plugins.lint',
   -- require 'kickstart.plugins.autopairs',
   -- require 'kickstart.plugins.neo-tree',
-  -- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
+  require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.
