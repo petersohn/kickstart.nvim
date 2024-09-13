@@ -1001,6 +1001,8 @@ require('lazy').setup({
         ['<C-v>'] = { 'actions.select', opts = { vertical = true }, desc = 'Open the entry in a vertical split' },
         ['<C-s>'] = { 'actions.select', opts = { horizontal = true }, desc = 'Open the entry in a horizontal split' },
       },
+      show_hidden = true,
+      columns = { 'icon', 'size', 'mtime' },
     },
     -- Optional dependencies
     dependencies = {
@@ -1012,7 +1014,8 @@ require('lazy').setup({
       },
     },
     init = function()
-      vim.keymap.set('n', '<leader>f', '<Cmd>Oil<Cr>', { desc = '[F]ile manager' })
+      vim.keymap.set('n', '<leader>f', '<Cmd>Oil --float<Cr>', { desc = '[F]ile manager' })
+      vim.keymap.set('n', '<leader>.', '<Cmd>Oil --float .<Cr>', { desc = '[F]ile manager' })
     end,
   },
   {
