@@ -433,6 +433,9 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
       vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
       vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
+      vim.api.nvim_create_user_command('Ag', function(arg)
+        builtin.grep_string { search = arg.args }
+      end, { desc = 'Grep string', nargs = '?' })
 
       -- Slightly advanced example of overriding default behavior and theme
       vim.keymap.set('n', '<leader>/', function()
@@ -993,9 +996,21 @@ require('lazy').setup({
     'stevearc/oil.nvim',
     ---@module 'oil'
     ---@type oil.SetupOpts
-    opts = {},
+    opts = {
+      keymaps = {
+        ['<C-v>'] = { 'actions.select', opts = { vertical = true }, desc = 'Open the entry in a vertical split' },
+        ['<C-s>'] = { 'actions.select', opts = { horizontal = true }, desc = 'Open the entry in a horizontal split' },
+      },
+    },
     -- Optional dependencies
-    dependencies = { { 'echasnovski/mini.icons', opts = { style = 'ascii' } } },
+    dependencies = {
+      {
+        'echasnovski/mini.icons',
+        opts = {
+          style = vim.g.have_nerd_font and 'glyph' or 'ascii',
+        },
+      },
+    },
     init = function()
       vim.keymap.set('n', '<leader>f', '<Cmd>Oil<Cr>', { desc = '[F]ile manager' })
     end,
