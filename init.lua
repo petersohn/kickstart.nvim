@@ -119,6 +119,7 @@ require('lazy').setup({
   require 'custom.plugins.a',
   require 'custom.plugins.oil',
   require 'custom.plugins.rainbow-delimiters',
+  require 'custom.plugins.gp',
 
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
@@ -132,7 +133,12 @@ require('lazy').setup({
   { 'tpope/vim-obsession' },
   { 'tpope/vim-speeddating' },
   { 'tpope/vim-surround' },
-  { 'bkad/CamelCaseMotion' },
+  {
+    'bkad/CamelCaseMotion',
+    init = function()
+      vim.g.camelcasemotion_key = ','
+    end,
+  },
   { 'ngg/vim-gn' },
 
   require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
