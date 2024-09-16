@@ -77,6 +77,7 @@ vim.opt.linebreak = false
 vim.opt.autoread = true
 vim.opt.swapfile = false
 vim.opt.updatetime = 500
+vim.opt.colorcolumn = '81'
 
 require 'custom.keymaps'
 require 'custom.commands'
@@ -133,6 +134,7 @@ require('lazy').setup({
   { 'tpope/vim-obsession' },
   { 'tpope/vim-speeddating' },
   { 'tpope/vim-surround' },
+  { 'tpope/vim-sleuth' },
   {
     'bkad/CamelCaseMotion',
     init = function()
