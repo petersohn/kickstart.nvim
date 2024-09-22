@@ -135,6 +135,7 @@ require('lazy').setup({
   { 'tpope/vim-speeddating' },
   { 'tpope/vim-surround' },
   { 'tpope/vim-sleuth' },
+  { 'tpope/vim-repeat' },
   {
     'bkad/CamelCaseMotion',
     init = function()

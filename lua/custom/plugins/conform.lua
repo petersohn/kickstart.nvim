@@ -42,16 +42,11 @@ return {
       python = { 'black' },
       javascript = { 'prettierd', 'prettier', stop_after_first = true },
       typescript = { 'prettierd', 'prettier', stop_after_first = true },
-      html = { 'prettier' },
-      css = { 'prettier' },
-      c = { 'clangd' },
-      cpp = { 'clangd' },
+      html = { 'prettierd', 'prettier', stop_after_first = true },
+      css = { 'prettierd', 'prettier', stop_after_first = true },
+      c = { 'clang-format' },
+      cpp = { 'clang-format' },
       rust = { 'rustfmt' },
-      -- Conform can also run multiple formatters sequentially
-      -- python = { "isort", "black" },
-      --
-      -- You can use 'stop_after_first' to run the first available formatter from the list
-      -- javascript = { "prettierd", "prettier", stop_after_first = true },
     },
   },
 }
