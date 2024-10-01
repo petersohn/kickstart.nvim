@@ -82,7 +82,7 @@ return { -- Fuzzy Finder (files, lsp, etc)
     vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
     vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
     vim.api.nvim_create_user_command('Ag', function(arg)
-      builtin.grep_string { search = arg.args }
+      builtin.grep_string { search = arg.args, use_regex = true }
     end, { desc = 'Grep string', nargs = '?' })
 
     -- Slightly advanced example of overriding default behavior and theme
