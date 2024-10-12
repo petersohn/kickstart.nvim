@@ -8,20 +8,22 @@ return {
         copilot = {},
         googleai = {},
         ollama = {
-          endpoint = 'http://localhost:11434/api/chat',
+          endpoint = 'http://localhost:11434/v1/chat/completions',
         },
       },
+      default_command_agent = 'DeepSeekCoderV2',
       agents = {
         {
-          name = 'CodeOllamaLlama3.1-8B',
-          disable = true,
-        },
-        {
-          name = 'DeepSeekCopderV2',
-          chat = true,
+          name = 'DeepSeekCoderV2',
+          chat = false,
           command = true,
           provider = 'ollama',
-          model = 'deepseek-coder-v2',
+          model = {
+            model = 'deepseek-coder-v2',
+            temperature = 1.0,
+            top_p = 1,
+            num_ctx = 8192,
+          },
           system_prompt = require('gp.defaults').chat_system_prompt,
         },
       },
