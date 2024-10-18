@@ -124,6 +124,7 @@ require('lazy').setup({
   require 'custom.plugins.gitsigns', -- adds gitsigns recommend keymaps
   require 'custom.plugins.neotest',
   require 'custom.plugins.easy-dotnet',
+  require 'custom.plugins.decisive',
 
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
