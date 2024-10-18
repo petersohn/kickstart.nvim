@@ -146,6 +146,9 @@ require('lazy').setup({
     end,
   },
   { 'ngg/vim-gn' },
+  { 'ngg/vim-gn' },
+  { 'zapling/mason-lock.nvim' },
+  { 'rhysd/committia.vim' },
 }, {
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the
